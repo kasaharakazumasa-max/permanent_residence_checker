@@ -1,0 +1,59 @@
+{
+  "lastUpdated": "2026-06-02",
+  "income": {
+    "baseLimit": 300,
+    "perDependentAdditional": 70
+  },
+  "stay": {
+    "generalStayYears": 10,
+    "generalWorkYears": 5,
+    "spouseMarriageYears": 3,
+    "spouseCohabitYears": 1
+  },
+  "guidelines": [
+    {
+      "title": "最長の在留期間要件の厳格化（2026年2月24日改定）",
+      "content": "在留期間「3年」を「最長の在留期間」とみなす経過措置は2027年3月31日までに申請・結果受領するものに限られます。2027年4月1日以降は原則として「5年」の在留期間が必要です。"
+    },
+    {
+      "title": "公的義務履行の審査厳格化（2026年2月24日改定）",
+      "content": "納税・公的年金・健康保険料について、申請時点で完納していても、当初の納付期限を遅れて支払っている場合は消極的（不許可リスク高）に評価されます。"
+    },
+    {
+      "title": "実務上の年収基準（扶養家族加算）",
+      "content": "審査実務上、基準年収目安は300万円ですが、扶養家族が1人増えるごとに約70万〜80万円の年収加算が求められます。"
+    }
+  ],
+  "evidence": [
+    {
+      "category": "公式ガイドライン",
+      "title": "永住許可に関するガイドライン（令和6年改定）",
+      "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
+      "description": "出入国在留管理庁が公表する永住許可の審査基準・要件の公式ガイドライン"
+    },
+    {
+      "category": "申請手続き",
+      "title": "永住許可申請 提出書類一覧・手続案内",
+      "url": "https://www.moj.go.jp/isa/applications/procedures/zairyu_eiju01.html",
+      "description": "永住許可申請に必要な提出書類の一覧と申請手続きの案内ページ"
+    },
+    {
+      "category": "制度改正",
+      "title": "永住許可の在り方に関する検討結果について",
+      "url": "https://www.moj.go.jp/isa/publications/materials/01_00424.html",
+      "description": "2024年の法改正に伴う永住許可制度の見直し検討結果・パブリックコメント資料"
+    },
+    {
+      "category": "法令根拠",
+      "title": "出入国管理及び難民認定法 第22条（永住許可）",
+      "url": "https://elaws.e-gov.go.jp/document?lawid=326CO0000000319",
+      "description": "永住許可の法的根拠となる入管法の条文（e-Gov法令検索）"
+    },
+    {
+      "category": "公的義務",
+      "title": "公的義務の履行に関する審査の厳格化について",
+      "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
+      "description": "納税・社会保険料の期日内納付が永住審査で厳格に求められるようになった経緯と基準"
+    }
+  ]
+}

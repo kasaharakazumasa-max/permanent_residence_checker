@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>永住許可要件チェックツール - 行政書士実務用</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #1e40af;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --border: #e2e8f0;
+      
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-danger: #ef4444;
+      
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .container {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group.grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .label-desc {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      font-weight: normal;
+      margin-top: -0.25rem;
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background-color: #fafafa;
+      box-sizing: border-box;
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+      background-color: #fff;
+    }
+
+    .radio-card-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .radio-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.6rem;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background-color: #fafafa;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .radio-card input {
+      display: none;
+    }
+
+    .radio-card:hover {
+      background-color: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .radio-card.selected {
+      background-color: rgba(30, 58, 138, 0.08);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    button.btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s ease;
+      margin-top: 1rem;
+    }
+
+    button.btn-submit:hover {
+      background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* 判定結果エリアのスタイル */
+    .result-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .result-card {
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      background-color: var(--bg-card);
+    }
+
+    .result-header-card {
+      text-align: center;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    .result-header-card.success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .result-header-card.warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .result-header-card.danger {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .overall-badge {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0.5rem 0;
+      letter-spacing: 0.05em;
+    }
+
+    .result-card h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .result-card.result-header-card h3 {
+      color: white;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .result-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .result-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .result-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .badge-danger {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .badge-success {
+      background-color: #d1fae5;
+      color: #065f46;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .doc-category {
+      font-weight: bold;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .policy-item {
+      background-color: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+    }
+
+    .policy-item-title {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    .policy-item-desc {
+      color: var(--text-sub);
+    }
+
+    .sync-status {
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-top: -1.5rem;
+      margin-bottom: 1rem;
+      padding-right: 0.5rem;
+    }
+
+    .placeholder-result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    /* エビデンスリンクのスタイル */
+    .evidence-item {
+      display: block;
+      background-color: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .evidence-item:hover {
+      background-color: rgba(30, 58, 138, 0.04);
+      border-left-color: #1e40af;
+      box-shadow: var(--shadow-sm);
+      transform: translateX(2px);
+    }
+
+    .evidence-item-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .evidence-category {
+      background-color: rgba(30, 58, 138, 0.1);
+      color: var(--primary);
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .evidence-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--primary);
+    }
+
+    .evidence-desc {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 0.2rem;
+    }
+
+    .evidence-url {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      margin-top: 0.15rem;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>永住許可要件チェックツール</h1>
+    <p>行政書士実務用・最新の運用ガイドライン準拠判定</p>
+  </header>
+
+  <div class="container">
+    <!-- 左側：一括入力フォーム -->
+    <div class="card">
+      <div class="card-header">
+        <h2>
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z"/></svg>
+          相談者状況 一括入力
+        </h2>
+      </div>
+      
+      <div class="sync-status" id="syncStatus">
+        設定データ: 読み込み中...
+      </div>
+
+      <form id="checkerForm">
+        <!-- 基本情報 -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1.05rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; color: var(--text-sub); margin-top: 0;">基本情報</h3>
+          
+          <div class="form-group">
+            <label for="visa">現在の在留資格</label>
+            <select id="visa" name="visa" required>
+              <option value="">選択してください --</option>
+              <option value="技術・人文知識・国際業務">技術・人文知識・国際業務</option>
+              <option value="経営・管理">経営・管理</option>
+              <option value="高度専門職">高度専門職</option>
+              <option value="技能">技能</option>
+              <option value="特定技能">特定技能</option>
+              <option value="家族滞在">家族滞在</option>
+              <option value="日本人の配偶者等">日本人の配偶者等</option>
+              <option value="永住者の配偶者等">永住者の配偶者等</option>
+              <option value="定住者">定住者</option>
+              <option value="留学">留学</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="visaPeriod">現在の在留期間</label>
+            <div class="label-desc">※在留カードに記載されている在留期間</div>
+            <select id="visaPeriod" name="visaPeriod" required>
+              <option value="">選択してください --</option>
+              <option value="5年">5年</option>
+              <option value="3年">3年</option>
+              <option value="1年">1年</option>
+              <option value="1年未満">1年未満（6ヶ月、3ヶ月など）</option>
+            </select>
+          </div>
+
+          <div class="form-group grid">
+  <div>
+    <label for="stayYears">日本での在留年数</label>
+    <input type="number" id="stayYears" name="stayYears" min="0" placeholder="例: 10" required>
+  </div>
+  <div>
+    <label for="workYears">うち就労年数</label>
+    <div class="label-desc">※資格に応じた就労年数</div>
+    <input type="number" id="workYears" name="workYears" min="0" placeholder="例: 5" required>
+  </div>
+</div>
+<div class="form-group">
+  <label for="employmentYears">勤続年数（年）</label>
+  <div class="label-desc">※現在の雇用先での在職期間</div>
+  <input type="number" id="employmentYears" name="employmentYears" min="0" placeholder="例: 3" required>
+</div>
+<div class="form-group">
+  <label for="jobChanges">直近1年の転職回数</label>
+  <div class="label-desc">※転職回数が多いほど職歴の安定性が低くなります</div>
+  <input type="number" id="jobChanges" name="jobChanges" min="0" placeholder="例: 1" required>
+</div>
+
+          <div class="form-group grid">
+            <div>
+              <label for="income">直近の年収（万円）</label>
+              <input type="number" id="income" name="income" min="0" placeholder="例: 350" required>
+            </div>
+            <div>
+              <label for="family">扶養家族の人数</label>
+              <div class="label-desc">※税法上の扶養人数</div>
+              <input type="number" id="family" name="family" min="0" placeholder="0" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>税金の未納・納付期限遅れの有無</label>
+            <div class="label-desc">※住民税・国税など（1日でも遅れがあれば「あり」）</div>
+            <div class="radio-card-group" data-group="taxUnpaid">
+              <label class="radio-card"><input type="radio" name="taxUnpaid" value="yes" required> あり（遅延含む）</label>
+              <label class="radio-card selected"><input type="radio" name="taxUnpaid" value="no" checked> なし</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>社会保険の未加入・納付期限遅れの有無</label>
+            <div class="label-desc">※公的年金・国民健康保険などの期日内支払状況</div>
+            <div class="radio-card-group" data-group="socialIns">
+              <label class="radio-card"><input type="radio" name="socialIns" value="no" required> 未加入・遅延あり</label>
+              <label class="radio-card selected"><input type="radio" name="socialIns" value="yes" checked> 加入・全期日内納付</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>犯罪歴の有無</label>
+            <div class="label-desc">※交通違反の回数が多い場合も含む</div>
+            <div class="radio-card-group" data-group="criminal">
+              <label class="radio-card"><input type="radio" name="criminal" value="yes" required> あり</label>
+              <label class="radio-card selected"><input type="radio" name="criminal" value="no" checked> なし</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>公的扶助の受給の有無</label>
+            <div class="label-desc">※生活保護等の受給歴</div>
+            <div class="radio-card-group" data-group="welfare">
+              <label class="radio-card"><input type="radio" name="welfare" value="yes" required> 受給あり</label>
+              <label class="radio-card selected"><input type="radio" name="welfare" value="no" checked> 受給なし</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 資産情報（参考条件） -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1.05rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; color: var(--text-sub); margin-top: 0;">資産情報（参考条件）</h3>
+          
+          <div class="form-group">
+            <label>持ち家の有無</label>
+            <div class="radio-card-group" data-group="hasHouse">
+              <label class="radio-card"><input type="radio" name="hasHouse" value="yes"> あり</label>
+              <label class="radio-card selected"><input type="radio" name="hasHouse" value="no" checked> なし</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="savings">預貯金総額（万円）</label>
+            <div class="label-desc">※世帯全体の預貯金合計の目安</div>
+            <input type="number" id="savings" name="savings" min="0" placeholder="例: 500" value="0">
+          </div>
+        </div>
+
+        <!-- 日本人配偶者の特例 -->
+        <div style="margin-bottom: 2rem;">
+          <h3 style="font-size: 1.05rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; color: var(--text-sub); margin-top: 0;">日本人配偶者の特例</h3>
+          
+          <div class="form-group">
+            <label>日本人配偶者の有無</label>
+            <div class="radio-card-group" data-group="spouseJapanese">
+              <label class="radio-card"><input type="radio" name="spouseJapanese" value="yes" required> あり</label>
+              <label class="radio-card selected"><input type="radio" name="spouseJapanese" value="no" checked> なし</label>
+            </div>
+          </div>
+
+          <div id="spouseFields" style="display: none;">
+            <div class="form-group grid">
+              <div>
+                <label for="marriageYears">婚姻期間（年）</label>
+                <input type="number" id="marriageYears" name="marriageYears" min="0" value="0">
+              </div>
+              <div>
+                <label for="cohabitYears">日本での同居期間（年）</label>
+                <input type="number" id="cohabitYears" name="cohabitYears" min="0" value="0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 企業側書類 -->
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.05rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; color: var(--text-sub); margin-top: 0;">企業側書類の準備状況</h3>
+          
+          <div class="form-group grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 0.75rem;">
+            <div>
+              <label style="margin-bottom: 0.25rem;">在職証明書</label>
+              <div class="radio-card-group" data-group="proofEmployment">
+                <label class="radio-card selected"><input type="radio" name="proofEmployment" value="yes" checked> あり</label>
+                <label class="radio-card"><input type="radio" name="proofEmployment" value="no"> なし</label>
+              </div>
+            </div>
+            <div>
+              <label style="margin-bottom: 0.25rem;">雇用契約書</label>
+              <div class="radio-card-group" data-group="contract">
+                <label class="radio-card selected"><input type="radio" name="contract" value="yes" checked> あり</label>
+                <label class="radio-card"><input type="radio" name="contract" value="no"> なし</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group grid" style="grid-template-columns: 1fr 1fr;">
+            <div>
+              <label style="margin-bottom: 0.25rem;">源泉徴収票(3年分)</label>
+              <div class="radio-card-group" data-group="paySlip">
+                <label class="radio-card selected"><input type="radio" name="paySlip" value="yes" checked> あり</label>
+                <label class="radio-card"><input type="radio" name="paySlip" value="no"> なし</label>
+              </div>
+            </div>
+            <div>
+              <label style="margin-bottom: 0.25rem;">給与台帳</label>
+              <div class="radio-card-group" data-group="payLedger">
+                <label class="radio-card selected"><input type="radio" name="payLedger" value="yes" checked> あり</label>
+                <label class="radio-card"><input type="radio" name="payLedger" value="no"> なし</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">判定する</button>
+      </form>
+    </div>
+
+    <!-- 右側：判定結果カード表示エリア -->
+    <div class="result-pane">
+      <div id="placeholder" class="placeholder-result">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.03 0 1.9.693 2.166 1.638m-7.377 2.24a.75.75 0 011.08.104 2.25 2.25 0 003.496 0 .75.75 0 011.08-.104m-9.862 9.21a3 3 0 105.714 0m-5.714 0a3 3 0 115.714 0M10.5 8.25h3l-3 4.5h3" /></svg>
+        <p style="margin-top: 1rem; font-weight: 600;">必要情報を入力し、「判定する」ボタンをクリックしてください。</p>
+        <p style="font-size: 0.85rem; padding: 0 2rem;">入力された情報に基づいて、総合判定、不足要件、必要書類、実務上の留意点などを自動的に抽出します。</p>
+      </div>
+
+      <div id="resultContent" style="display: none; flex-direction: column; gap: 1.5rem;">
+        <!-- 1. 総合判定カード -->
+        <div class="result-card result-header-card" id="cardOverall">
+          <h3>永住許可 総合判定</h3>
+          <div class="overall-badge" id="overallText">判定中...</div>
+          <p id="overallSummary" style="margin: 0.5rem 0 0; font-size: 0.95rem; opacity: 0.9;"></p>
+        </div>
+
+        <!-- 2. 不足している要件 -->
+        <div class="result-card" id="cardMissing" style="display: none;">
+          <h3 style="color: var(--color-danger);">⚠️ 不足している要件（要注意事項含む）</h3>
+          <ul class="result-list" id="missingList"></ul>
+        </div>
+
+        <!-- 3. 必要書類リスト -->
+        <div class="result-card">
+          <h3>📋 必要書類リスト</h3>
+          <div class="doc-category">【本人準備書類】</div>
+          <ul class="result-list" id="personalDocList" style="margin-bottom: 1rem;"></ul>
+          
+          <div class="doc-category">【企業側準備書類】</div>
+          <ul class="result-list" id="companyDocList"></ul>
+        </div>
+
+        <!-- 4. 最新運用・通達の留意点 -->
+        <div class="result-card">
+          <h3>ℹ️ 実務上・最新通達の留意点</h3>
+          <div id="guidelinesList"></div>
+        </div>
+
+        <!-- 5. エビデンス・根拠資料 -->
+        <div class="result-card" id="cardEvidence">
+          <h3>🔗 エビデンス・公的根拠資料</h3>
+          <p style="font-size: 0.85rem; color: var(--text-sub); margin-top: 0; margin-bottom: 0.75rem;">本ツールの判定ロジックは以下の公式資料に基づいています。各リンクから原文を確認できます。</p>
+          <div id="evidenceList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // デフォルトの設定ルール（rules.jsonがフェッチできなかった場合のフォールバック）
+    const DEFAULT_RULES = {
+      "lastUpdated": "2026-06-02 (ローカルデータ)",
+      "income": {
+        "baseLimit": 300,
+        "perDependentAdditional": 70
+      },
+      "stay": {
+        "generalStayYears": 10,
+        "generalWorkYears": 5,
+        "spouseMarriageYears": 3,
+        "spouseCohabitYears": 1
+      },
+      "guidelines": [
+        {
+          "title": "最長の在留期間要件の厳格化（2026年2月24日改定）",
+          "content": "在留期間「3年」を「最長の在留期間」とみなす経過措置は2027年3月31日までに申請・結果受領するものに限られます。2027年4月1日以降は原則として「5年」の在留期間が必要です。"
+        },
+        {
+          "title": "公的義務履行の審査厳格化（2026年2月24日改定）",
+          "content": "納税・公的年金・健康保険料について、申請時点で完納していても、当初の納付期限を遅れて支払っている場合は消極的（不許可リスク高）に評価されます。"
+        },
+        {
+          "title": "実務上の年収基準（扶養家族加算）",
+          "content": "審査実務上、基準年収目安は300万円ですが、扶養家族が1人増えるごとに約70万〜80万円の年収加算が求められます。"
+        }
+      ],
+      "evidence": [
+        {
+          "category": "公式ガイドライン",
+          "title": "永住許可に関するガイドライン（令和6年改定）",
+          "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
+          "description": "出入国在留管理庁が公表する永住許可の審査基準・要件の公式ガイドライン"
+        },
+        {
+          "category": "申請手続き",
+          "title": "永住許可申請 提出書類一覧・手続案内",
+          "url": "https://www.moj.go.jp/isa/applications/procedures/zairyu_eiju01.html",
+          "description": "永住許可申請に必要な提出書類の一覧と申請手続きの案内ページ"
+        },
+        {
+          "category": "制度改正",
+          "title": "永住許可の在り方に関する検討結果について",
+          "url": "https://www.moj.go.jp/isa/publications/materials/01_00424.html",
+          "description": "2024年の法改正に伴う永住許可制度の見直し検討結果・パブリックコメント資料"
+        },
+        {
+          "category": "法令根拠",
+          "title": "出入国管理及び難民認定法 第22条（永住許可）",
+          "url": "https://elaws.e-gov.go.jp/document?lawid=326CO0000000319",
+          "description": "永住許可の法的根拠となる入管法の条文（e-Gov法令検索）"
+        },
+        {
+          "category": "公的義務",
+          "title": "公的義務の履行に関する審査の厳格化について",
+          "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
+          "description": "納税・社会保険料の期日内納付が永住審査で厳格に求められるようになった経緯と基準"
+        }
+      ]
+    };
+
+    let activeRules = DEFAULT_RULES;
+
+    // 外部JSON設定ファイルの自動ロード
+    async function loadRules() {
+      const syncStatus = document.getElementById('syncStatus');
+      try {
+        const response = await fetch('rules.json');
+        if (!response.ok) throw new Error('Network response was not ok');
+        activeRules = await response.json();
+        syncStatus.innerHTML = `設定データ: 自動同期完了 (更新日: ${activeRules.lastUpdated})`;
+        syncStatus.style.color = '#10b981';
+      } catch (err) {
+        console.warn('rules.jsonの読み込みに失敗しました。内蔵ルールを使用します。', err);
+        activeRules = DEFAULT_RULES;
+        syncStatus.innerHTML = `設定データ: ローカル判定ルール使用中 (CORS制限またはオフライン)`;
+        syncStatus.style.color = '#f59e0b';
+      }
+      renderStaticGuidelines();
+    }
+
+    // 留意点カードの初期描画
+    function renderStaticGuidelines() {
+      // ガイドライン留意点の描画
+      const container = document.getElementById('guidelinesList');
+      container.innerHTML = '';
+      activeRules.guidelines.forEach(guide => {
+        const div = document.createElement('div');
+        div.className = 'policy-item';
+        div.innerHTML = `
+          <div class="policy-item-title">${guide.title}</div>
+          <div class="policy-item-desc">${guide.content}</div>
+        `;
+        container.appendChild(div);
+      });
+
+      // エビデンスリンクの描画
+      renderEvidenceLinks();
+    }
+
+    // エビデンス・公的根拠資料リンクの描画
+    function renderEvidenceLinks() {
+      const evidenceContainer = document.getElementById('evidenceList');
+      if (!evidenceContainer) return;
+      evidenceContainer.innerHTML = '';
+
+      const evidenceData = activeRules.evidence;
+      if (!evidenceData || !Array.isArray(evidenceData) || evidenceData.length === 0) {
+        evidenceContainer.innerHTML = '<p style="color: var(--text-sub); font-size: 0.85rem;">エビデンスリンクが設定されていません。</p>';
+        return;
+      }
+
+      evidenceData.forEach(item => {
+        const link = document.createElement('a');
+        link.href = item.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'evidence-item';
+        link.innerHTML = `
+          <div class="evidence-item-header">
+            <span class="evidence-category">${item.category}</span>
+            <span class="evidence-title">${item.title}</span>
+          </div>
+          <div class="evidence-desc">${item.description}</div>
+          <div class="evidence-url">🔗 ${item.url}</div>
+        `;
+        evidenceContainer.appendChild(link);
+      });
+    }
+
+    // ラジオボタンのカード風選択挙動のバインディング
+    document.querySelectorAll('.radio-card-group').forEach(group => {
+      const name = group.dataset.group;
+      const cards = group.querySelectorAll('.radio-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          cards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          const input = card.querySelector('input');
+          input.checked = true;
+          
+          // 日本人配偶者の有無によるフィールド制御
+          if (name === 'spouseJapanese') {
+            const spouseFields = document.getElementById('spouseFields');
+            const marriageInput = document.getElementById('marriageYears');
+            const cohabitInput = document.getElementById('cohabitYears');
+            if (input.value === 'yes') {
+              spouseFields.style.display = 'block';
+              marriageInput.required = true;
+              cohabitInput.required = true;
+            } else {
+              spouseFields.style.display = 'none';
+              marriageInput.required = false;
+              cohabitInput.required = false;
+              marriageInput.value = '0';
+              cohabitInput.value = '0';
+            }
+          }
+        });
+      });
+    });
+
+    // 判定処理
+    document.getElementById('checkerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const visa = form.visa.value;
+      const visaPeriod = form.visaPeriod.value;
+      const stayYears = Number(form.stayYears.value);
+      const workYears = Number(form.workYears.value);
+      const income = Number(form.income.value);
+      const family = Number(form.family.value);
+      
+      const taxUnpaid = form.taxUnpaid.value === 'yes';
+      const socialIns = form.socialIns.value === 'yes'; // yesが全期日内支払
+      const criminal = form.criminal.value === 'yes';
+      const welfare = form.welfare.value === 'yes';
+      
+      const hasHouse = form.hasHouse.value === 'yes';
+      const savings = Number(form.savings.value);
+      
+      const spouseJapanese = form.spouseJapanese.value === 'yes';
+      const marriageYears = spouseJapanese ? Number(form.marriageYears.value) : 0;
+      const cohabitYears = spouseJapanese ? Number(form.cohabitYears.value) : 0;
+      
+      const proofEmployment = form.proofEmployment.value === 'yes';
+      const contract = form.contract.value === 'yes';
+      const paySlip = form.paySlip.value === 'yes';
+      const payLedger = form.payLedger.value === 'yes';
+      const employmentYears = Number(form.employmentYears.value);
+      const jobChanges = Number(form.jobChanges.value);
+      const missing = [];
+      const personalDocs = [
+        '永住許可申請書',
+        '写真（4cm×3cm）',
+        'パスポート',
+        '在留カード',
+        '住民票',
+        '住民税課税証明書（3年分）',
+        '納税証明書（その1・その2）'
+      ];
+
+      if (hasHouse) {
+        personalDocs.push('不動産の登記事項証明書（自宅の土地・建物所有権の証明用）');
+      }
+      if (savings > 0) {
+        personalDocs.push(`預貯金通帳の写し または 残高証明書（現在額: ${savings}万円）`);
+      }
+      
+      // 企業書類リストの構築
+      const companyDocs = [
+        { name: '在職証明書', prepared: proofEmployment },
+        { name: '雇用契約書', prepared: contract },
+        { name: '源泉徴収票（3年分）', prepared: paySlip },
+        { name: '給与台帳', prepared: payLedger }
+      ];
+
+      // --- 判定ロジックの評価 ---
+      
+      // 1. 一般在留期間要件の判定
+      const stayLimit = activeRules.stay.generalStayYears;
+      const workLimit = activeRules.stay.generalWorkYears;
+      const generalStayClear = (stayYears >= stayLimit && workYears >= workLimit);
+      
+      // 2. 配偶者特例要件の判定
+      const spouseMarriageLimit = activeRules.stay.spouseMarriageYears;
+      const spouseCohabitLimit = activeRules.stay.spouseCohabitYears;
+      const spouseSpecialClear = spouseJapanese && (marriageYears >= spouseMarriageLimit && cohabitYears >= spouseCohabitLimit);
+      
+      // 3. 必要年収要件の判定 (扶養加算ロジック適用)
+      const baseLimit = activeRules.income.baseLimit;
+      const perDependent = activeRules.income.perDependentAdditional;
+      const requiredIncome = baseLimit + (perDependent * family);
+      const incomeClear = (income >= requiredIncome);
+
+      // --- 不足要件リストアップ ---
+      // 在留期間が「最長」かどうかの判定
+      const hasCriticalPeriodIssue = (visaPeriod === '1年' || visaPeriod === '1年未満');
+      if (hasCriticalPeriodIssue) {
+        missing.push('現在の在留期間が最長（3年または5年）ではありません（1年以下は「最長の在留期間をもって在留していること」という要件を満たさないため、原則として申請が受理されないか、不許可の可能性が極めて高くなります）。');
+      } else if (visaPeriod === '3年') {
+        missing.push('現在の在留期間は「3年」です（2027年3月31日までに申請して結果を受領する場合に限り経過措置として「最長」とみなされますが、2027年4月1日以降は原則として「5年」が必要となるため注意してください）。');
+      }
+
+      if (!generalStayClear && !spouseSpecialClear) {
+        if (spouseJapanese) {
+          missing.push(`在留年数または配偶者特例の要件が不足しています（一般: 在留${stayLimit}年かつ就労${workLimit}年、配偶者特例: 婚姻${spouseMarriageLimit}年かつ同居${spouseCohabitLimit}年以上が必要）`);
+        } else {
+          missing.push(`日本での在留年数が不足しています（原則として在留${stayLimit}年以上、かつ就労${workLimit}年以上が必要です）`);
+        }
+      }
+      
+      if (!incomeClear) {
+        if (hasHouse || savings >= 500) {
+          missing.push(`年収が審査目安（約${requiredIncome}万円）を下回っています（現在${income}万円）。ただし、資産（${hasHouse ? '持ち家あり' : ''}${hasHouse && savings >= 500 ? '・' : ''}${savings >= 500 ? '預貯金' + savings + '万円' : ''}）によるプラス評価で、生計要件の補完が認められる可能性があります。不動産登記簿や残高証明書を積極的に提出してください。`);
+        } else {
+          missing.push(`年収が審査基準を下回っています（扶養家族${family}名の場合の基準目安は 約${requiredIncome}万円 ですが、現在${income}万円です。生計要件を補完する不動産所有や十分な預貯金も確認できません）。`);
+        }
+      }
+// 職歴安定性チェック
+if (jobChanges > 2 || employmentYears < 2) {
+  missing.push('職歴の安定性が不足しています（直近1年の転職回数は2回以下、在職期間は2年以上が必要です）');
+}
+      
+      if (taxUnpaid) {
+        missing.push('税金（住民税・国税等）に未納、または納付期限遅れがあります（当初の納付期限遅れは極めて厳しく評価されます）');
+      }
+      
+      if (!socialIns) {
+        missing.push('社会保険（公的年金・健康保険）に未加入、または納付期限遅れがあります（直近2年間はすべての納付期限を守っている必要があります）');
+      }
+      
+      if (criminal) {
+        missing.push('犯罪歴または一定以上の交通違反があります');
+      }
+      
+      if (welfare) {
+        missing.push('公的扶住（生活保護等）の受給歴があります');
+      }
+
+      // 企業書類不足の追加
+      companyDocs.forEach(doc => {
+        if (!doc.prepared) {
+          missing.push(`企業側必要書類の不足：${doc.name}が準備できていません`);
+        }
+      });
+
+      // --- 総合判定の決定 ---
+      let overall = '';
+      let statusClass = '';
+      let summaryText = '';
+
+      const hasCriticalNG = taxUnpaid || !socialIns || criminal || welfare || hasCriticalPeriodIssue;
+      
+      if (hasCriticalNG) {
+        overall = '現状では難しい';
+        statusClass = 'danger';
+        summaryText = '公的義務（納税・社保）の不履行や犯罪歴、受給歴などがある場合、現行の運用基準では許可の可能性が極めて低くなります。';
+      } else if (missing.length > 0) {
+        // NGではないが、期間や年収・書類に不足がある
+        overall = '条件次第';
+        statusClass = 'warning';
+        // 資産があることによるアドバイスを付加
+        if (hasHouse || savings >= 300) {
+          summaryText = `在留年数、年収、または提出書類の不足が見られます。ただし、資産（${hasHouse ? '持ち家あり' : ''}${hasHouse && savings >= 300 ? '・' : ''}${savings >= 300 ? '預貯金' + savings + '万円' : ''}）が参考条件として評価されます。不足事項を解消・立証準備することで可能性を高められます。`;
+        } else {
+          summaryText = '在留年数、年収、または提出書類の不足が見られます。不足事項を解消・立証準備することで可能性を高められます。';
+        }
+      } else {
+        // すべての要件を満たす
+        overall = '可能性が高い';
+        statusClass = 'success';
+        summaryText = '現在のガイドライン要件をすべてクリアしています。' + 
+          (hasHouse || savings >= 300 ? `また、資産（${hasHouse ? '持ち家あり' : ''}${hasHouse && savings >= 300 ? '・' : ''}${savings >= 300 ? '預貯金' + savings + '万円' : ''}）がある点は、生計要件における強いプラス評価材料となります。` : '') + 
+          '立証書類を完璧に揃えて申請へ進むことが推奨されます。';
+      }
+
+      // --- UIへの反映 ---
+      const headerCard = document.getElementById('cardOverall');
+      headerCard.className = `result-card result-header-card ${statusClass}`;
+      document.getElementById('overallText').textContent = overall;
+      document.getElementById('overallSummary').textContent = summaryText;
+
+      // 不足要件の描画
+      const missingCard = document.getElementById('cardMissing');
+      const missingList = document.getElementById('missingList');
+      if (missing.length > 0) {
+        missingCard.style.display = 'block';
+        missingList.innerHTML = '';
+        missing.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = item.includes('企業側') 
+            ? `<span class="badge-danger">書類不足</span> ${item}`
+            : `<span class="badge-danger">要件不足</span> ${item}`;
+          missingList.appendChild(li);
+        });
+      } else {
+        missingCard.style.display = 'none';
+      }
+
+      // 本人書類の描画
+      const personalList = document.getElementById('personalDocList');
+      personalList.innerHTML = '';
+      personalDocs.forEach(doc => {
+        const li = document.createElement('li');
+        li.innerHTML = `✓ ${doc}`;
+        personalList.appendChild(li);
+      });
+
+      // 企業書類の描画
+      const companyList = document.getElementById('companyDocList');
+      companyList.innerHTML = '';
+      companyDocs.forEach(doc => {
+        const li = document.createElement('li');
+        if (doc.prepared) {
+          li.innerHTML = `✓ ${doc.name} <span class="badge-success">準備済</span>`;
+        } else {
+          li.innerHTML = `✗ ${doc.name} <span class="badge-danger">不足</span>`;
+        }
+        companyList.appendChild(li);
+      });
+
+      // 表示切り替えとスクロール
+      document.getElementById('placeholder').style.display = 'none';
+      document.getElementById('resultContent').style.display = 'flex';
+      
+      // 結果エリアへスクロール（モバイル・タブレット用）
+      document.getElementById('resultContent').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // 画面ロード時に自動初期化
+    window.addEventListener('DOMContentLoaded', loadRules);
+  </script>
+</body>
+</html>
