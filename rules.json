@@ -31,39 +31,21 @@
   "evidence": [
     {
       "category": "公式ガイドライン",
-      "title": "永住許可に関するガイドライン（令和6年改定）",
-      "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
-      "description": "出入国在留管理庁が公表する永住許可の審査基準・要件の公式ガイドライン"
+      "title": "出入国在留管理庁 公式ポータル",
+      "url": "https://www.moj.go.jp/isa/index.html",
+      "description": "出入国在留管理庁の公式トップページ。永住許可に関する最新の通達・ガイドライン情報を確認できます。"
     },
     {
       "category": "申請手続き",
-      "title": "永住許可申請 提出書類一覧・手続案内",
-      "url": "https://www.moj.go.jp/isa/applications/procedures/zairyu_eiju01.html",
-      "description": "永住許可申請に必要な提出書類の一覧と申請手続きの案内ページ"
-    },
-    {
-      "category": "資産要件",
-      "title": "生計要件（入管法第22条第2項第2号）における資産評価の考え方",
-      "url": "https://www.moj.go.jp/isa/applications/procedures/zairyu_eiju01.html",
-      "description": "出入国在留管理庁の公式手続案内。預貯金・有価証券・不動産等の資産立証資料および生計維持能力の立証範囲に関する公式規定"
-    },
-    {
-      "category": "制度改正",
-      "title": "永住許可の在り方に関する検討結果について",
-      "url": "https://www.moj.go.jp/isa/publications/materials/01_00424.html",
-      "description": "2024年の法改正に伴う永住許可制度の見直し検討結果・パブリックコメント資料"
+      "title": "永住許可申請 手続案内（出入国在留管理庁）",
+      "url": "https://www.moj.go.jp/isa/applications/procedures/zairyu_eijuu01.html",
+      "description": "永住許可申請の概要および必要書類（各種チェックシート）の公式案内ページです。"
     },
     {
       "category": "法令根拠",
-      "title": "出入国管理及び難民認定法 第22条（永住許可）",
+      "title": "出入国管理及び難民認定法 第22条（永住許可・生計要件）",
       "url": "https://elaws.e-gov.go.jp/document?lawid=326CO0000000319",
-      "description": "永住許可の法的根拠となる入管法の条文（e-Gov法令検索）"
-    },
-    {
-      "category": "公的義務",
-      "title": "公的義務の履行に関する審査の厳格化について",
-      "url": "https://www.moj.go.jp/isa/publications/materials/nyukan_nyukan50.html",
-      "description": "納税・社会保険料の期日内納付が永住審査で厳格に求められるようになった経緯と基準"
+      "description": "永住許可の根拠法規（e-Gov法令検索）。生計要件（資産・技能要件）の法的定義を確認できます。"
     }
   ]
 }
